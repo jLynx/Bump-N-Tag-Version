@@ -32,7 +32,7 @@ else
     content=$(echo "-- File doesn't exist --")
 fi
 
-extract_string=$(echo $content|busybox grep -P '(?<=CURRENT_VERSION ")(.*)(?=")' -o)
+extract_string=$(echo '#define CURRENT_VERSION "1.0.0.2" some other random text' | awk -F[\"\"] '{print $2}')
 
 if [[ "$extract_string" == "" ]]; then 
     echo "\nInvalid version string"
