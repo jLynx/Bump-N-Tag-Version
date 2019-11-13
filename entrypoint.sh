@@ -67,5 +67,5 @@ echo "Git Push"
 git push --follow-tags "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:$github_ref
 
 
-echo "End of Action\n\n"
+echo "End of Action"
 exit 0
