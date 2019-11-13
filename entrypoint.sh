@@ -32,16 +32,13 @@ else
     content=$(echo "-- File doesn't exist --")
 fi
 
-regex='CURRENT_VERSION "(.*)"'
+extract_string=$(echo $content|grep -P '(?<=CURRENT_VERSION ")(.*)(?=")' -o)
 
-if [[ $content =~ $regex ]]
-then
-    echo "\nValid version string found"
-    extract_string="${BASH_REMATCH[1]}"
-    echo $extract_string    # concatenate strings
-else
+if [[ "$extract_string" == "" ]]; then 
     echo "\nInvalid version string"
     exit 0
+else
+    echo "\nValid version string found"
 fi
 
 major=$(echo $extract_string | cut -d'.' -f1) 
