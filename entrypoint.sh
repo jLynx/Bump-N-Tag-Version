@@ -35,10 +35,10 @@ fi
 extract_string=$(echo '#define CURRENT_VERSION "1.0.0.2" some other random text' | awk -F[\"\"] '{print $2}')
 
 if [[ "$extract_string" == "" ]]; then 
-    echo "\nInvalid version string"
+    echo "Invalid version string"
     exit 0
 else
-    echo "\nValid version string found"
+    echo "Valid version string found"
 fi
 
 major=$(echo $extract_string | cut -d'.' -f1) 
