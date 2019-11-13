@@ -32,32 +32,27 @@ else
     content=$(echo "-- File doesn't exist --")
 fi
 
-echo "File Content: $content"
-extract_string=$(echo $content | awk '/^([[:space:]])*(#define CURRENT_VERSION ")?([[:blank:]])*([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,3})(\.([0-9]{1,5}))?[[:space:]]*(")$/{print $0}')
-echo "Extracted string: $extract_string"
+regex='CURRENT_VERSION "(.*)"'
 
-if [[ "$extract_string" == "" ]]; then 
+if [[ $content =~ $regex ]]
+then
+    echo "\nValid version string found"
+    extract_string="${BASH_REMATCH[1]}"
+    echo $extract_string    # concatenate strings
+else
     echo "\nInvalid version string"
     exit 0
-else
-    echo "\nValid version string found"
 fi
 
 major=$(echo $extract_string | cut -d'.' -f1) 
-major=${major:(-2)}
 minor=$(echo $extract_string | cut -d'.' -f2)
 patch=$(echo $extract_string | cut -d'.' -f3)
 build=$(echo $extract_string | cut -d'.' -f4)
 
-if [[ $build = "" ]]; then
-    oldver=$(echo $major.$minor.$patch)
-    patch=$(expr $patch + 1)
-    newver=$(echo $major.$minor.$patch)
-else
-    oldver=$(echo $major.$minor.$patch.$build)
-    build=$(expr $build + 1)
-    newver=$(echo $major.$minor.$patch.$build)
-fi
+
+oldver=$(echo $major.$minor.$patch.$build)
+build=$(expr $build + 1)
+newver=$(echo $major.$minor.$patch.$build)
 
 echo "\nOld Ver: $oldver"
 echo "\nUpdated version: $newver" 
