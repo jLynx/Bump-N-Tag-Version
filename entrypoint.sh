@@ -3,13 +3,13 @@ set -e
 
 file_name=$1
 tag_version=$2
-echo "\nInput file name: $file_name : $tag_version"
+echo "Input file name: $file_name : $tag_version"
 
 echo "Git Head Ref: ${GITHUB_HEAD_REF}"
 echo "Git Base Ref: ${GITHUB_BASE_REF}"
 echo "Git Event Name: ${GITHUB_EVENT_NAME}"
 
-echo "\nStarting Git Operations"
+echo "Starting Git Operations"
 git config --global user.email "Bump-N-Tag@github-action.com"
 git config --global user.name "Bump-N-Tag App"
 
@@ -51,8 +51,8 @@ oldver=$(echo $major.$minor.$patch.$build)
 build=$(expr $build + 1)
 newver=$(echo $major.$minor.$patch.$build)
 
-echo "\nOld Ver: $oldver"
-echo "\nUpdated version: $newver" 
+echo "Old Ver: $oldver"
+echo "Updated version: $newver" 
 
 newcontent=$(echo ${content/$oldver/$newver})
 echo $newcontent > $file_name
@@ -67,5 +67,5 @@ echo "Git Push"
 git push --follow-tags "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:$github_ref
 
 
-echo "\nEnd of Action\n\n"
+echo "End of Action\n\n"
 exit 0
