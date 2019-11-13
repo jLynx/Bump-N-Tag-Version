@@ -32,7 +32,7 @@ else
     content=$(echo "-- File doesn't exist --")
 fi
 
-extract_string=$(echo $content|grep -P '(?<=CURRENT_VERSION ")(.*)(?=")' -o)
+extract_string=$(echo $content|busybox grep -P '(?<=CURRENT_VERSION ")(.*)(?=")' -o)
 
 if [[ "$extract_string" == "" ]]; then 
     echo "\nInvalid version string"
